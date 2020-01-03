@@ -12,6 +12,7 @@ import (
 #cgo android,arm LDFLAGS: -L${SRCDIR}/android_libs/armeabi-v7a/lib -lvpx -lm
 #cgo android,arm64 LDFLAGS: -L${SRCDIR}/android_libs/arm64-v8a/lib -lvpx -lm
 #cgo android,386 LDFLAGS: -L${SRCDIR}/android_libs/x86/lib -lvpx -lm
+#cgo android,amd64 LDFLAGS: -L${SRCDIR}/android_libs/x86_64/lib -lvpx -lm
 #cgo !android pkg-config: vpx
 #include <stdlib.h>
 #include "vpx/vpx_encoder.h"
