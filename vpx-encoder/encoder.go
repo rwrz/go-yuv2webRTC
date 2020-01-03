@@ -45,7 +45,7 @@ import "C"
 const chanSize = 2
 
 // NewVpxEncoder create vp8 encoder
-func NewVpxEncoder(w, h, fps, bitrate, keyframe int, strides []int, sizes []int) (*VpxEncoder, error) {
+func NewVpxEncoder(w, h, fps, bitrate, keyframe int, strides []int32, sizes []int32) (*VpxEncoder, error) {
 	v := &VpxEncoder{
 		Output: make(chan []byte, 5*chanSize),
 		Input:  make(chan []byte, chanSize),
@@ -72,8 +72,8 @@ type VpxEncoder struct {
 	started bool
 	Output  chan []byte // frame
 	Input   chan []byte // yuvI420
-	strides []int
-	sizes   []int
+	strides []int32
+	sizes   []int32
 	// C
 	width            C.uint
 	height           C.uint

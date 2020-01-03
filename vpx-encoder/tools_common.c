@@ -198,10 +198,16 @@ int vpx_img_read2(vpx_image_t *img, void *bs, int *strides, int *sizes) {
   int plane;
   for (plane = 0; plane < 3; ++plane) {
     unsigned char *buf = img->planes[plane];
-    const int stride = img->stride[plane];
 
+    // copy plane buffer
     memcpy(buf, bs, sizes[plane]);
+
+    // change plane stride to the same from Android
     img->stride[plane] = strides[plane];
+
+    // move pointer the same amount added to it
+    bs += sizes[plane];
+    printf("%d\n", sizes[plane]);
   }
   return 1;
 }

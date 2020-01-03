@@ -49,7 +49,7 @@ func (w *WebRTC) StartClient(remoteSession string, width, height int) (string, e
 		time.Sleep(2 * time.Second)
 	}
 
-	encoder, err := vpxEncoder.NewVpxEncoder(width, height, 20, 1200, 5, []int{1, 1, 1}, []int{width * height, width * height, width * height})
+	encoder, err := vpxEncoder.NewVpxEncoder(width, height, 20, 1200, 5, []int32{1, 1, 1}, []int32{int32(width * height), int32(width * height), int32(width * height)})
 	if err != nil {
 		return "", err
 	}
