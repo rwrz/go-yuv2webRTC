@@ -44,7 +44,7 @@ import "C"
 const chanSize = 2
 
 // NewVpxEncoder create vp8 encoder
-func NewVpxEncoder(w, h, fps, bitrate, keyframe int) (*VpxEncoder, error) {
+func NewVpxEncoder(w, h, fps, bitrate, keyframe int, strides []int, sizes []int) (*VpxEncoder, error) {
 	v := &VpxEncoder{
 		Output: make(chan []byte, 5*chanSize),
 		Input:  make(chan []byte, chanSize),
@@ -55,6 +55,8 @@ func NewVpxEncoder(w, h, fps, bitrate, keyframe int) (*VpxEncoder, error) {
 		bitrate:          C.uint(bitrate),
 		keyFrameInterval: C.int(keyframe),
 		frameCount:       C.int(0),
+		strides:          strides,
+		sizes:            sizes,
 	}
 
 	if err := v.init(); err != nil {
@@ -69,6 +71,8 @@ type VpxEncoder struct {
 	started bool
 	Output  chan []byte // frame
 	Input   chan []byte // yuvI420
+	strides []int
+	sizes   []int
 	// C
 	width            C.uint
 	height           C.uint
@@ -120,7 +124,10 @@ func (v *VpxEncoder) startLooping() {
 			yuv := <-v.Input
 			// Add Image
 			v.vpxCodexIter = nil
-			C.vpx_img_read(&v.vpxImage, unsafe.Pointer(&yuv[0]))
+
+			strides := (*C.int)(unsafe.Pointer(&v.strides[0]))
+			sizes := (*C.int)(unsafe.Pointer(&v.sizes[0]))
+			C.vpx_img_read2(&v.vpxImage, unsafe.Pointer(&yuv[0]), strides, sizes)
 
 			var flags C.int
 			if v.keyFrameInterval > 0 && v.frameCount%v.keyFrameInterval == 0 {

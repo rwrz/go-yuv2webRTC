@@ -122,6 +122,7 @@ const VpxInterface *get_vpx_decoder_by_fourcc(uint32_t fourcc);
 int vpx_img_plane_width(const vpx_image_t *img, int plane);
 int vpx_img_plane_height(const vpx_image_t *img, int plane);
 void vpx_img_write(const vpx_image_t *img, FILE *file);
+int vpx_img_read2(vpx_image_t *img, void *bs, int *strides, int *sizes);
 int vpx_img_read(vpx_image_t *img, void *bs);
 double sse_to_psnr(double samples, double peak, double mse);
 #if CONFIG_ENCODERS

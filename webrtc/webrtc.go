@@ -8,7 +8,7 @@ import (
 	"github.com/pions/webrtc/examples/util"
 	"github.com/pions/webrtc/pkg/ice"
 	"github.com/pions/webrtc/pkg/media"
-	vpxEncoder "github.com/poi5305/go-yuv2webRTC/vpx-encoder"
+	vpxEncoder "github.com/rwrz/go-yuv2webRTC/vpx-encoder"
 )
 
 var config = webrtc.RTCConfiguration{IceServers: []webrtc.RTCIceServer{{URLs: []string{"stun:stun.l.google.com:19302"}}}}
@@ -49,7 +49,7 @@ func (w *WebRTC) StartClient(remoteSession string, width, height int) (string, e
 		time.Sleep(2 * time.Second)
 	}
 
-	encoder, err := vpxEncoder.NewVpxEncoder(width, height, 20, 1200, 5)
+	encoder, err := vpxEncoder.NewVpxEncoder(width, height, 20, 1200, 5, []int{1, 1, 1}, []int{width * height, width * height, width * height})
 	if err != nil {
 		return "", err
 	}

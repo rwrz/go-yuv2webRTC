@@ -194,6 +194,18 @@ void vpx_img_write(const vpx_image_t *img, FILE *file) {
   }
 }
 
+int vpx_img_read2(vpx_image_t *img, void *bs, int *strides, int *sizes) {
+  int plane;
+  for (plane = 0; plane < 3; ++plane) {
+    unsigned char *buf = img->planes[plane];
+    const int stride = img->stride[plane];
+
+    memcpy(buf, bs, sizes[plane]);
+    img->stride[plane] = strides[plane];
+  }
+  return 1;
+}
+
 int vpx_img_read(vpx_image_t *img, void *bs) {
   int plane;
   for (plane = 0; plane < 3; ++plane) {

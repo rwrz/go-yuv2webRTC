@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/poi5305/go-yuv2webRTC/screenshot"
-	"github.com/poi5305/go-yuv2webRTC/webrtc"
+	"github.com/rwrz/go-yuv2webRTC/screenshot"
+	"github.com/rwrz/go-yuv2webRTC/webrtc"
 )
 
 var screenWidth int
